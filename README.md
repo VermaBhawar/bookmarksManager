@@ -1,6 +1,7 @@
 # Smart Bookmark App
 
 A simple bookmark manager built with Next.js and Supabase.
+Website Link - https://bookmarks-manager-lyart.vercel.app/
 
 ## Features
 
@@ -66,14 +67,29 @@ create table if not exists public.bookmarks (
   url text not null,
   created_at timestamptz not null default now()
 );
-```
 
-Recommended indexes:
+alter table public.bookmarks enable row level security;
 
-```sql
-create index if not exists bookmarks_user_id_idx on public.bookmarks(user_id);
-create index if not exists bookmarks_created_at_idx on public.bookmarks(created_at desc);
-```
+create policy "Users can view own bookmarks"
+on public.bookmarks
+for select
+to authenticated
+using (auth.uid() = user_id);
+
+create policy "Users can insert own bookmarks"
+on public.bookmarks
+for insert
+to authenticated
+with check (auth.uid() = user_id);
+
+create policy "Users can delete own bookmarks"
+on public.bookmarks
+for delete
+to authenticated
+using (auth.uid() = user_id);
+
+alter publication supabase_realtime add table public.bookmarks;
+
 
 Enable Google provider in Supabase Auth and set the site URL / redirect URL for local development:
 
