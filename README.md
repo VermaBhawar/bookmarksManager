@@ -1,6 +1,6 @@
 # Smart Bookmark App
 
-A simple bookmark manager built with Next.js and Supabase.
+A simple bookmark manager built with Next.js and Supabase.   
 Website Link - https://bookmarks-manager-lyart.vercel.app/
 
 ## Features
