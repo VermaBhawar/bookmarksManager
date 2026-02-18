@@ -58,7 +58,6 @@ export function useBookmarks(session: Session | null): UseBookmarksResult {
           event: "*",
           schema: "public",
           table: "bookmarks",
-          filter: `user_id=eq.${userId}`,
         },
         () => fetchBookmarks(),
       )
